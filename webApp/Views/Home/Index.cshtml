@@ -1,0 +1,26 @@
+﻿@model IndexViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h2>@Model.UpdateStockResult</h2>
+<hr />
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">GTIN</th>
+      <th scope="col">Product Name</th>
+      <th scope="col">Quantity</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var item in Model.products)
+    {
+        <tr>
+            <td>@item.Gtin</td>
+            <td>@item.productName</td>
+            <td>@item.Quantity</td>
+        </tr>
+    }
+  </tbody>
+</table>
