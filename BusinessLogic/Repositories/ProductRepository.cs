@@ -3,17 +3,24 @@ using System.Text;
 using DataAccess.Models;
 using System.Text.Json;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Configuration;
 
 namespace BusinessLogic.Repositories
 {
     public class ProductRepository : IProductRepository
     {
+        private readonly IConfiguration _config;
+        public ProductRepository(IConfiguration config)
+        {
+            _config = config;
+        }
         static HttpClient client = new HttpClient();
         public async Task<string> updateStock(List<offerStockApiRequestModel> products)
         {
+            var apikey = _config["apikey"];
             string _r = "";
             offerStockApiResultModel result = null;
-            string path = "https://api-dev.channelengine.net/api/v2/offer/stock?apikey=541b989ef78ccb1bad630ea5b85c6ebff9ca3322";
+            string path = $"https://api-dev.channelengine.net/api/v2/offer/stock?apikey={apikey}";
             HttpResponseMessage response = await client.PutAsJsonAsync(path, products);
 
             response.EnsureSuccessStatusCode();

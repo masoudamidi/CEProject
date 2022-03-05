@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BusinessLogic.Repositories;
 using ConsoleTables;
 using DataAccess.Models;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -13,6 +14,10 @@ namespace cApp
         public static void Main(string[] args)
         {
             using var host = CreateHostBuilder(args).Build();
+            var builder = new ConfigurationBuilder()
+               .AddJsonFile($"appsettings.json", true, true);
+
+            var config = builder.Build();
 
             List<Product> A = getTopFiveProducts(host.Services);
 

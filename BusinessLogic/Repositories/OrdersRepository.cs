@@ -1,14 +1,21 @@
 using DataAccess.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace BusinessLogic.Repositories
 {
     public class OrdersRepository : IOrdersRepository
     {
+        private readonly IConfiguration _config;
+        public OrdersRepository(IConfiguration config)
+        {
+            _config = config;
+        }
         static HttpClient client = new HttpClient();
         public async Task<orderApiResultModel> getOrdersByStatus(string Status)
         {
+            var apikey = _config["apikey"];
             orderApiResultModel result = null;
-            string path = "https://api-dev.channelengine.net/api/v2/orders/?apikey=541b989ef78ccb1bad630ea5b85c6ebff9ca3322" + "&status=" + Status;
+            string path = $"https://api-dev.channelengine.net/api/v2/orders/?apikey={apikey}&status={Status}";
             HttpResponseMessage response = await client.GetAsync(path);
             if (response.IsSuccessStatusCode)
             {
