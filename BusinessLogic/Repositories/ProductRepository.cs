@@ -20,6 +20,24 @@ namespace BusinessLogic.Repositories
         //Updating the Stock of product using provided Api.
         public async Task<string> updateStock(List<offerStockApiRequestModel> products)
         {
+            //Check argument validation
+
+            //Checking that every Merchant Product Numbers is valid
+            if (products.Any(t => t.MerchantProductNo == ""))
+            {
+                return "Merchant Product No cannot be null";
+            }
+            //Checking All Stock quantities are valid
+            if (products.Any(t => t.Stock < 0))
+            {
+                return "Stock quantity is not valid.";
+            }
+            //Checking All stock location Ids are valid
+            if (products.Any(t => t.StockLocationId == 0))
+            {
+                return "Stock Location Id is not valid.";
+            }
+
             //Reading the api key from appsetting.json
             var apikey = _config["apikey"];
             string _r = "";
@@ -38,7 +56,7 @@ namespace BusinessLogic.Repositories
             {
                 //Reading and binding the response of api to the model
                 result = await response.Content.ReadAsAsync<offerStockApiResultModel>();
-                
+
                 //Checking if there is and error returned from the API
                 //If there is no error then combining the products that sent to api for stock update.
                 //If there is errors then combining the errors and sending them for showing in the view
@@ -48,7 +66,7 @@ namespace BusinessLogic.Repositories
                     _r += " | Updated Products: ";
                     foreach (var item in products)
                     {
-                        _r += item.MerchantProductNo + $" Stock:({item.Stock}) - "; 
+                        _r += item.MerchantProductNo + $" Stock:({item.Stock}) - ";
                     }
                 }
                 else
