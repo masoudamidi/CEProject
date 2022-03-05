@@ -14,7 +14,7 @@ namespace BusinessLogic.Repositories
         static HttpClient client = new HttpClient();
 
         //Getting the Orders with given status from the API and storing them in the model
-        public async Task<orderApiResultModel> getOrdersByStatus(string Status)
+        public async Task<orderApiResultModel> getOrdersByStatus(orderStatus Status)
         {
             //Retrieving the Api Key from appsettings.json
             var apikey = _config["apikey"];

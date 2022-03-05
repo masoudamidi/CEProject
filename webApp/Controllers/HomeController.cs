@@ -21,7 +21,7 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         //Calling method for getting Orders that are in "IN_PROGRESS" status
-        var _Orders = ordersRepository.getOrdersByStatus("IN_PROGRESS").Result;
+        var _Orders = ordersRepository.getOrdersByStatus(orderStatus.IN_PROGRESS).Result;
 
         //Calculating Top 5 Products based on recieved orders
         var _topFiveProducts = ordersRepository.getTopFiveProduct(_Orders.Content);
