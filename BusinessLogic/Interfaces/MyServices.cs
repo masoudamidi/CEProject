@@ -5,10 +5,12 @@ namespace BusinessLogic.Interfaces
 {
     public static class MyServices
     {
+        //Gathering all Repositories and Registering for DI in one file for better read and usability.
+        //Finally after declaring all of the interfaces and classes here. This Class going to use in WebApp Startup for final registration.
         public static IServiceCollection AddMyServices(this IServiceCollection services)
         {
-            services.AddScoped<IOrdersRepository, OrdersRepository>();
-            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddTransient<IOrdersRepository, OrdersRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
             return services;
         }
     }

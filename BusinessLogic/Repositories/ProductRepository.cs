@@ -9,26 +9,39 @@ namespace BusinessLogic.Repositories
 {
     public class ProductRepository : IProductRepository
     {
+        //Injecting the Configuration for accessing the appsettings.json
         private readonly IConfiguration _config;
         public ProductRepository(IConfiguration config)
         {
             _config = config;
         }
         static HttpClient client = new HttpClient();
+
+        //Updating the Stock of product using provided Api.
         public async Task<string> updateStock(List<offerStockApiRequestModel> products)
         {
+            //Reading the api key from appsetting.json
             var apikey = _config["apikey"];
             string _r = "";
             offerStockApiResultModel result = null;
+
+            //Combining the Api path url and the apikey for authorization
             string path = $"https://api-dev.channelengine.net/api/v2/offer/stock?apikey={apikey}";
+
+            //Using PUT version of the request because it's going to update a record
             HttpResponseMessage response = await client.PutAsJsonAsync(path, products);
 
+            //Checking If the response is in a good shape with no exception
             response.EnsureSuccessStatusCode();
 
             if (response.IsSuccessStatusCode)
             {
+                //Reading and binding the response of api to the model
                 result = await response.Content.ReadAsAsync<offerStockApiResultModel>();
                 
+                //Checking if there is and error returned from the API
+                //If there is no error then combining the products that sent to api for stock update.
+                //If there is errors then combining the errors and sending them for showing in the view
                 if (result.Content?.Count == 0)
                 {
                     _r = result.Message;
