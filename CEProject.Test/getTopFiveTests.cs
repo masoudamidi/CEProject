@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.IO;
 using BusinessLogic.Repositories;
 using DataAccess.Models;
+using Microsoft.Extensions.Configuration;
 using Moq;
 using Xunit;
 
@@ -11,11 +13,21 @@ public class ordersTest
     [Fact]
     public void getTopFiveProduct_Test()
     {
-        IOrdersRepository orders = new OrdersRepository();
+        //GIVEN
+        var appSettingsStub = new Dictionary<string, string> {
+            {"apikey", "541b989ef78ccb1bad630ea5b85c6ebff9ca3322"}
+        };
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(appSettingsStub)
+            .Build();
+        IOrdersRepository orders = new OrdersRepository(configuration);
 
         var DummyData = GetDummyData();
+
+        //WHEN
         var result = orders.getTopFiveProduct(DummyData);
 
+        //THEN
         Assert.True(result.Count <= 5);
     }
 
