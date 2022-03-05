@@ -20,6 +20,7 @@ public class ordersTest
         var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(appSettingsStub)
             .Build();
+            
         IOrdersRepository orders = new OrdersRepository(configuration);
 
         var DummyData = GetDummyData();
