@@ -1,5 +1,3 @@
-using BusinessLogic.Repositories;
-using BusinessLogic.Interfaces;
 using DataAccess.Models;
 
 public interface IOrdersRepository

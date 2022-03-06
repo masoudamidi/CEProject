@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using BusinessLogic.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace webApp.Controllers;
 

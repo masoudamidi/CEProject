@@ -1,9 +1,6 @@
 using System.Collections.Generic;
-using System.IO;
 using BusinessLogic.Repositories;
-using DataAccess.Models;
 using Microsoft.Extensions.Configuration;
-using Moq;
 using Xunit;
 
 namespace CEProject.Test;
