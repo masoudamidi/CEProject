@@ -6,7 +6,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}webApp/bin/Debug/net6.0/webApp.dll",
+            "program": "${workspaceFolder}/webApp/bin/Debug/net6.0/webApp.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,

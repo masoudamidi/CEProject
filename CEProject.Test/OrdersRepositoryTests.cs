@@ -10,6 +10,27 @@ namespace CEProject.Test;
 
 public class ordersTest
 {
+
+    [Fact]
+    public void getTopFiveProduct_invalid_Api_Value_Test()
+    {
+        //GIVEN
+        var appSettingsStub = new Dictionary<string, string> {
+            {"apikey", "testkeyvalue"}
+        };
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(appSettingsStub)
+            .Build();
+
+        IOrdersRepository orders = new OrdersRepository(configuration);
+
+        //WHEN
+        var result = orders.getOrdersByStatus(orderStatus.IN_PROGRESS).Result;
+
+        //THEN
+        Assert.Equal("401", result.StatusCode.ToString());
+    }
+
     [Fact]
     public void getTopFiveProduct_Test()
     {
@@ -32,6 +53,8 @@ public class ordersTest
         Assert.True(result.Count <= 5);
     }
 
+    //Preparing Dummy data for the test
+    //Because testing is about only products with their quantity we can only fill required data.
     public static List<Order> GetDummyData()
     {
         List<Order> myDummyData = new List<Order>();
