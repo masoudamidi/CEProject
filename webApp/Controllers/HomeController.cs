@@ -40,7 +40,7 @@ public class HomeController : Controller
         var _products = new List<offerStockApiRequestModel>();
         _products.Add(_product);
 
-        //Calling The Method that Updates the Quantity
+        //Calling The Method that Updates the stock of the product
         var updateStockResult = productRepository.updateStock(_products).Result;
 
         //Combine the two models to one model for showing in the VIEW.
