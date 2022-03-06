@@ -27,12 +27,8 @@ namespace BusinessLogic.Repositories
             //Creating a response for api request. using Async version is better for perfomance
             HttpResponseMessage response = await client.GetAsync(path);
 
-            //Checking if the request responded correctly with no exception
-            if (response.IsSuccessStatusCode)
-            {
-                //Reading the api result and binding the result with model provided for the response
-                result = await response.Content.ReadAsAsync<orderApiResultModel>();
-            }
+            //Reading the api result and binding the result with model provided for the response
+            result = await response.Content.ReadAsAsync<orderApiResultModel>();
             return result;
         }
 

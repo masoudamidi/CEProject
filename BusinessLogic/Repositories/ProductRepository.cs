@@ -30,12 +30,12 @@ namespace BusinessLogic.Repositories
             //Checking All Stock quantities are valid
             if (products.Any(t => t.Stock < 0))
             {
-                return "Stock quantity is not valid.";
+                return "Stock quantity is not valid";
             }
             //Checking All stock location Ids are valid
             if (products.Any(t => t.StockLocationId == 0))
             {
-                return "Stock Location Id is not valid.";
+                return "Stock Location Id is not valid";
             }
 
             //Reading the api key from appsetting.json
@@ -49,14 +49,11 @@ namespace BusinessLogic.Repositories
             //Using PUT version of the request because it's going to update a record
             HttpResponseMessage response = await client.PutAsJsonAsync(path, products);
 
-            //Checking If the response is in a good shape with no exception
-            response.EnsureSuccessStatusCode();
+            //Reading and binding the response of api to the model
+            result = await response.Content.ReadAsAsync<offerStockApiResultModel>();
 
             if (response.IsSuccessStatusCode)
             {
-                //Reading and binding the response of api to the model
-                result = await response.Content.ReadAsAsync<offerStockApiResultModel>();
-
                 //Checking if there is and error returned from the API
                 //If there is no error then combining the products that sent to api for stock update.
                 //If there is errors then combining the errors and sending them for showing in the view
