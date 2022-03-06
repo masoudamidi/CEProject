@@ -18,11 +18,12 @@ namespace BusinessLogic.Repositories
         {
             //Retrieving the Api Key from appsettings.json
             var apikey = _config["apikey"];
+            var apipath = _config["apipath"];
             orderApiResultModel result = null;
 
             //Combining the Path URL and data is needed for the api. apikey is needed for authorization
             //and status is order status type for filtering the data coming from Api.
-            string path = $"https://api-dev.channelengine.net/api/v2/orders/?apikey={apikey}&status={Status}";
+            string path = $"{apipath}orders/?apikey={apikey}&status={Status}";
 
             //Creating a response for api request. using Async version is better for perfomance
             HttpResponseMessage response = await client.GetAsync(path);

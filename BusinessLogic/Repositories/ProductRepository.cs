@@ -35,11 +35,12 @@ namespace BusinessLogic.Repositories
 
             //Reading the api key from appsetting.json
             var apikey = _config["apikey"];
+            var apipath = _config["apipath"];
             string _result = "";
             offerStockApiResultModel result = null;
 
             //Combining the Api path url and the apikey for authorization
-            string path = $"https://api-dev.channelengine.net/api/v2/offer/stock?apikey={apikey}";
+            string path = $"{apipath}offer/stock?apikey={apikey}";
 
             //Using PUT version of the request because it's going to update a record
             HttpResponseMessage response = await client.PutAsJsonAsync(path, products);
