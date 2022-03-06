@@ -8,7 +8,7 @@ namespace cApp
         public static void Main(string[] args)
         {
             //Creating host for using DI in this console app
-            using var host = productsUtilities.CreateHostBuilder(args).Build();
+            using var host = DI.CreateHostBuilder(args).Build();
 
             //Adding configuration builder for accessing the data in appsettings.json
             var builder = new ConfigurationBuilder()
@@ -17,7 +17,7 @@ namespace cApp
             var config = builder.Build();
 
             //Getting the top 5 products from the API
-            IndexViewModel model = productsUtilities.getTopFiveProducts(host.Services);
+            IndexViewModel model = OrderUtility.getTopFiveProducts(host.Services);
 
             if (string.IsNullOrEmpty(model.Message))
             {
