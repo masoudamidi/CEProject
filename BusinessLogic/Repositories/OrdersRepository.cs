@@ -37,7 +37,7 @@ namespace BusinessLogic.Repositories
         {
             //Getting all order lines and Grouping by the name and gtin and summing the Quantity they have in orders
             //Then Ordering them by the summation and Taking the Top of all products.
-            var tmp = orders.SelectMany(t => t.Lines).GroupBy(x => new { x.Description, x.Gtin })
+            var topFiveProductList = orders.SelectMany(t => t.Lines).GroupBy(x => new { x.Description, x.Gtin })
                         .Select(y => new Product
                         {
                             productName = y.Key.Description,
@@ -48,7 +48,7 @@ namespace BusinessLogic.Repositories
                         .Take(5)
                         .ToList();
 
-            return tmp;
+            return topFiveProductList;
         }
     }
 }
