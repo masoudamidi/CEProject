@@ -65,12 +65,12 @@ namespace BusinessLogic.Repositories
                 {
                     foreach (var item in result.Content)
                     {
-                        _result = item.Key + ": ";
+                        _result += item.Key + ": ";
                         foreach (var item2 in item.Value)
                         {
                             _result += item2 + " ";
                         }
-                        _result = " |";
+                        _result = " | ";
                     }
                 }
             }

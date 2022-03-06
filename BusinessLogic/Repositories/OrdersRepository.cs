@@ -47,7 +47,6 @@ namespace BusinessLogic.Repositories
                         .OrderByDescending(x => x.Quantity)
                         .Take(5)
                         .ToList();
-
             return topFiveProductList;
         }
     }
