@@ -4,8 +4,6 @@ namespace cApp
 {
     public class productsUtilities
     {
-        
-
         //Updating stock of a product using the provided API with given Quantity 
         public static async Task<string> updateQuantity(IServiceProvider services)
         {

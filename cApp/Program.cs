@@ -43,7 +43,7 @@ namespace cApp
 
             //Updating The Stock of the first product retrieved from api to 25. Using 25 is for this Assessment
             //the quantity can come from the user.
-            Console.WriteLine(productsUtilities.updateQuantity(host.Services));
+            Console.WriteLine(await productsUtilities.updateQuantity(host.Services));
         }
     }
 }
