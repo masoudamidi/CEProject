@@ -275,3 +275,4 @@ CEProject.Test/obj/Debug/net6.0/CEProject.Test.GeneratedMSBuildEditorConfig.edit
 CEProject.Test/obj/Debug/net6.0/CEProject.Test.genruntimeconfig.cache
 CEProject.Test/obj/Debug/net6.0/CEProject.Test.pdb
 CEProject.Test/obj/Debug/net6.0/ref/CEProject.Test.dll
+cApp/bin/Debug/net6.0/appsettings.json
