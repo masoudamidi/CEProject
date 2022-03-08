@@ -7,7 +7,7 @@ namespace cApp
         
 
         //Updating stock of a product using the provided API with given Quantity 
-        public static string updateQuantity(IServiceProvider services)
+        public static async Task<string> updateQuantity(IServiceProvider services)
         {
             //Creating a new service scope
             using var serviceScope = services.CreateScope();
@@ -18,7 +18,7 @@ namespace cApp
             var orderservice = provider.GetRequiredService<IOrdersRepository>();
 
             //Using the method inside Orders Interface for retrieving the Orders in "IN_PROGRESS" status
-            var ordersInProgress = orderservice.getOrdersByStatus(orderStatus.IN_PROGRESS).Result;
+            var ordersInProgress = await orderservice.getOrdersByStatus(orderStatus.IN_PROGRESS);
 
             if (ordersInProgress.StatusCode == 200)
             {
@@ -38,7 +38,7 @@ namespace cApp
                     _products.Add(_product);
 
                     //Returning the result from the api
-                    return productservice.updateStock(_products).Result;
+                    return await productservice.updateStock(_products);
                 }
                 else
                 {

@@ -5,7 +5,7 @@ public class OrderUtility
 {
        //Getting the orders that are in "IN_PROGRESS" status and calculating 
         //top five products that sold in those orders
-        public static IndexViewModel getTopFiveProducts(IServiceProvider services)
+        public static async Task<IndexViewModel> getTopFiveProducts(IServiceProvider services)
         {
             var model = new IndexViewModel();
 
@@ -18,7 +18,7 @@ public class OrderUtility
 
             //Using the method inside Orders Interface for retrieving the Orders in "IN_PROGRESS" status
             //The status can come from the end user but for the purpose of this assessment it just declared here.
-            var _Orders = ordersservice.getOrdersByStatus(orderStatus.IN_PROGRESS).Result;
+            var _Orders = await ordersservice.getOrdersByStatus(orderStatus.IN_PROGRESS);
 
             if (_Orders.StatusCode == 200)
             {

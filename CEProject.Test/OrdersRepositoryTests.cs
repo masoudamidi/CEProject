@@ -1,16 +1,17 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using BusinessLogic.Repositories;
 using DataAccess.Models;
 using Microsoft.Extensions.Configuration;
+using Moq;
 using Xunit;
 
 namespace CEProject.Test;
 
 public class ordersTest
 {
-
     [Fact]
-    public void getTopFiveProduct_invalid_Api_Value_Test()
+    public async Task getTopFiveProduct_invalid_Api_Value_Test()
     {
         //GIVEN
         var appSettingsStub = new Dictionary<string, string> {
@@ -23,7 +24,7 @@ public class ordersTest
         IOrdersRepository orders = new OrdersRepository(configuration);
 
         //WHEN
-        var result = orders.getOrdersByStatus(orderStatus.IN_PROGRESS).Result;
+        var result = await orders.getOrdersByStatus(orderStatus.IN_PROGRESS);
 
         //THEN
         Assert.Equal("401", result.StatusCode.ToString());

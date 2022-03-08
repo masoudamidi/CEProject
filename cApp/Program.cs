@@ -5,7 +5,7 @@ namespace cApp
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             //Creating host for using DI in this console app
             using var host = DI.CreateHostBuilder(args).Build();
@@ -17,7 +17,7 @@ namespace cApp
             var config = builder.Build();
 
             //Getting the top 5 products from the API
-            IndexViewModel model = OrderUtility.getTopFiveProducts(host.Services);
+            IndexViewModel model = await OrderUtility.getTopFiveProducts(host.Services);
 
             if (string.IsNullOrEmpty(model.Message))
             {
@@ -35,13 +35,11 @@ namespace cApp
                 //Returning The Error Message from Api
                 Console.WriteLine(model.Message);
             }
-            
+
             //Updating The Stock of the first product retrieved from api to 25. Using 25 is for this Assessment
             //the quantity can come from the user.
             Console.WriteLine(productsUtilities.updateQuantity(host.Services));
         }
-
-        
     }
 }
 
