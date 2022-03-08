@@ -11,7 +11,7 @@ public class productsTest
     [Fact]
     public void updateStock_Invalid_ProductMerchantNo_Value_Test()
     {
-        //GIVEN
+        //Arrange
 
         //Creating a dictionary for mocking the configuration that needed in product repository
         var appSettingsStub = new Dictionary<string, string> {
@@ -33,10 +33,10 @@ public class productsTest
             }
         };
 
-        //WHEN
+        //Act
         var result = products.updateStock(updateStockInput).Result;
 
-        //THEN
+        //Assert
         Assert.Equal("Merchant Product No cannot be null", result);
     }
 
@@ -44,7 +44,7 @@ public class productsTest
     [Fact]
     public void updateStock_Invalid_Stock_Value_Test()
     {
-        //GIVEN
+        //Arrange
         var appSettingsStub = new Dictionary<string, string> {
             {"apikey", "541b989ef78ccb1bad630ea5b85c6ebff9ca3322"},
             {"apipath", "https://api-dev.channelengine.net/api/v2/"}
@@ -63,10 +63,10 @@ public class productsTest
             }
         };
 
-        //WHEN
+        //Act
         var result = products.updateStock(updateStockInput).Result;
 
-        //THEN
+        //Assert
         Assert.Equal("Stock quantity is not valid", result);
     }
 
@@ -74,7 +74,7 @@ public class productsTest
     [Fact]
     public void updateStock_Invalid_StockLocationId_Value_Test()
     {
-        //GIVEN
+        //Arrange
         var appSettingsStub = new Dictionary<string, string> {
             {"apikey", "541b989ef78ccb1bad630ea5b85c6ebff9ca3322"},
             {"apipath", "https://api-dev.channelengine.net/api/v2/"}
@@ -93,10 +93,10 @@ public class productsTest
             }
         };
 
-        //WHEN
+        //Act
         var result = products.updateStock(updateStockInput).Result;
 
-        //THEN
+        //Assert
         Assert.Equal("Stock Location Id is not valid", result);
     }
 
@@ -104,7 +104,7 @@ public class productsTest
     [Fact]
     public void updateStock_Success_Test()
     {
-        //GIVEN
+        //Arrange
         var appSettingsStub = new Dictionary<string, string> {
             {"apikey", "541b989ef78ccb1bad630ea5b85c6ebff9ca3322"},
             {"apipath", "https://api-dev.channelengine.net/api/v2/"}
@@ -123,10 +123,10 @@ public class productsTest
             }
         };
 
-        //WHEN
+        //Act
         var result = products.updateStock(updateStockInput).Result;
 
-        //THEN
+        //Assert
         Assert.True(result.Contains("Updates processed without warnings"));
     }
 }
