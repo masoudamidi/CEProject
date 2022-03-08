@@ -15,7 +15,8 @@ public class ordersTest
     {
         //GIVEN
         var appSettingsStub = new Dictionary<string, string> {
-            {"apikey", "testkeyvalue"}
+            {"apikey", "testkeyvalue"},
+            {"apipath", "https://api-dev.channelengine.net/api/v2/"}
         };
         var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(appSettingsStub)
@@ -35,7 +36,8 @@ public class ordersTest
     {
         //GIVEN
         var appSettingsStub = new Dictionary<string, string> {
-            {"apikey", "541b989ef78ccb1bad630ea5b85c6ebff9ca3322"}
+            {"apikey", "541b989ef78ccb1bad630ea5b85c6ebff9ca3322"},
+            {"apipath", "https://api-dev.channelengine.net/api/v2/"}
         };
         var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(appSettingsStub)
