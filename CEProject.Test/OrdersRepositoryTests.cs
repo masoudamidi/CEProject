@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using BusinessLogic.Repositories;
 using CEProject.Test.Fixtures;
@@ -11,19 +12,22 @@ namespace CEProject.Test;
 
 public class ordersTest
 {
+    private readonly IConfiguration _config;
+
+    public ordersTest() 
+    {
+        _config = new ConfigurationBuilder()
+        .AddJsonFile(@"appsettings.json", false, false)
+        .AddEnvironmentVariables()
+        .Build();
+    }
+
     [Fact]
     public async Task getTopFiveProduct_invalid_Api_Value_Test()
     {
         //Arrange
-        var appSettingsStub = new Dictionary<string, string> {
-            {"apikey", "testkeyvalue"},
-            {"apipath", "https://api-dev.channelengine.net/api/v2/"}
-        };
-        var configuration = new ConfigurationBuilder()
-            .AddInMemoryCollection(appSettingsStub)
-            .Build();
-
-        IOrdersRepository orders = new OrdersRepository(configuration);
+        _config["apikey"] = "testapikey";
+        IOrdersRepository orders = new OrdersRepository(_config);
 
         //Act
         var result = await orders.getOrdersByStatus(orderStatus.IN_PROGRESS);
@@ -35,16 +39,8 @@ public class ordersTest
     [Fact]
     public void getTopFiveProduct_Test()
     {
-        //Arrange
-        var appSettingsStub = new Dictionary<string, string> {
-            {"apikey", "541b989ef78ccb1bad630ea5b85c6ebff9ca3322"},
-            {"apipath", "https://api-dev.channelengine.net/api/v2/"}
-        };
-        var configuration = new ConfigurationBuilder()
-            .AddInMemoryCollection(appSettingsStub)
-            .Build();
-            
-        IOrdersRepository orders = new OrdersRepository(configuration);
+        //Arrange           
+        IOrdersRepository orders = new OrdersRepository(_config);
 
         var DummyData = OrdersFixture.GetDummyData();
 

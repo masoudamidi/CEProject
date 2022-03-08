@@ -7,22 +7,21 @@ namespace CEProject.Test;
 
 public class productsTest
 {
+    private readonly IConfiguration _config;
+
+    public productsTest() 
+    {
+        _config = new ConfigurationBuilder()
+        .AddJsonFile(@"appsettings.json", false, false)
+        .AddEnvironmentVariables()
+        .Build();
+    }
     //Checking If ProductMerchantNo has incorrect value
     [Fact]
     public void updateStock_Invalid_ProductMerchantNo_Value_Test()
     {
         //Arrange
-
-        //Creating a dictionary for mocking the configuration that needed in product repository
-        var appSettingsStub = new Dictionary<string, string> {
-            {"apikey", "541b989ef78ccb1bad630ea5b85c6ebff9ca3322"},
-            {"apipath", "https://api-dev.channelengine.net/api/v2/"}
-        };
-        var configuration = new ConfigurationBuilder()
-            .AddInMemoryCollection(appSettingsStub)
-            .Build();
-
-        IProductRepository products = new ProductRepository(configuration);
+        IProductRepository products = new ProductRepository(_config);
 
         //Providing Dummy data for the test
         var updateStockInput = new List<offerStockApiRequestModel>() {
@@ -45,15 +44,7 @@ public class productsTest
     public void updateStock_Invalid_Stock_Value_Test()
     {
         //Arrange
-        var appSettingsStub = new Dictionary<string, string> {
-            {"apikey", "541b989ef78ccb1bad630ea5b85c6ebff9ca3322"},
-            {"apipath", "https://api-dev.channelengine.net/api/v2/"}
-        };
-        var configuration = new ConfigurationBuilder()
-            .AddInMemoryCollection(appSettingsStub)
-            .Build();
-
-        IProductRepository products = new ProductRepository(configuration);
+        IProductRepository products = new ProductRepository(_config);
 
         var updateStockInput = new List<offerStockApiRequestModel>() {
             new offerStockApiRequestModel() {
@@ -75,15 +66,7 @@ public class productsTest
     public void updateStock_Invalid_StockLocationId_Value_Test()
     {
         //Arrange
-        var appSettingsStub = new Dictionary<string, string> {
-            {"apikey", "541b989ef78ccb1bad630ea5b85c6ebff9ca3322"},
-            {"apipath", "https://api-dev.channelengine.net/api/v2/"}
-        };
-        var configuration = new ConfigurationBuilder()
-            .AddInMemoryCollection(appSettingsStub)
-            .Build();
-
-        IProductRepository products = new ProductRepository(configuration);
+        IProductRepository products = new ProductRepository(_config);
 
         var updateStockInput = new List<offerStockApiRequestModel>() {
             new offerStockApiRequestModel() {
@@ -105,15 +88,7 @@ public class productsTest
     public void updateStock_Success_Test()
     {
         //Arrange
-        var appSettingsStub = new Dictionary<string, string> {
-            {"apikey", "541b989ef78ccb1bad630ea5b85c6ebff9ca3322"},
-            {"apipath", "https://api-dev.channelengine.net/api/v2/"}
-        };
-        var configuration = new ConfigurationBuilder()
-            .AddInMemoryCollection(appSettingsStub)
-            .Build();
-
-        IProductRepository products = new ProductRepository(configuration);
+        IProductRepository products = new ProductRepository(_config);
 
         var updateStockInput = new List<offerStockApiRequestModel>() {
             new offerStockApiRequestModel() {
