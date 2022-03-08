@@ -24,6 +24,8 @@ namespace cApp
                 //Preparing the data for ConsoleTable package for showing the data in Readable Table in the Console Output
                 var rows = Enumerable.Repeat(model.products, model.products.Count());
 
+                Console.WriteLine("Top 5 sold products orders that are in progress: ");
+
                 //Printing the Data in Table version in Output from ConsoleTable package
                 ConsoleTable
                     .From<Product>(model.products.AsEnumerable())
@@ -35,6 +37,8 @@ namespace cApp
                 //Returning The Error Message from Api
                 Console.WriteLine(model.Message);
             }
+            
+            Console.WriteLine("Updating stock of top sold product to 25");
 
             //Updating The Stock of the first product retrieved from api to 25. Using 25 is for this Assessment
             //the quantity can come from the user.

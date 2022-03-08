@@ -35,11 +35,12 @@ namespace BusinessLogic.Repositories
 
             //Reading the api key from appsetting.json
             var apikey = _config["apikey"];
-            string _r = "";
+            var apipath = _config["apipath"];
+            string _result = "";
             offerStockApiResultModel result = null;
 
             //Combining the Api path url and the apikey for authorization
-            string path = $"https://api-dev.channelengine.net/api/v2/offer/stock?apikey={apikey}";
+            string path = $"{apipath}offer/stock?apikey={apikey}";
 
             //Using PUT version of the request because it's going to update a record
             HttpResponseMessage response = await client.PutAsJsonAsync(path, products);
@@ -54,27 +55,27 @@ namespace BusinessLogic.Repositories
                 //If there is errors then combining the errors and sending them for showing in the view
                 if (result.Content?.Count == 0)
                 {
-                    _r = result.Message;
-                    _r += " | Updated Products: ";
+                    _result = result.Message;
+                    _result += " | Updated Products: ";
                     foreach (var item in products)
                     {
-                        _r += item.MerchantProductNo + $" Stock:({item.Stock}) - ";
+                        _result += item.MerchantProductNo + $" Stock:({item.Stock}) - ";
                     }
                 }
                 else
                 {
                     foreach (var item in result.Content)
                     {
-                        _r = item.Key + ": ";
+                        _result += item.Key + ": ";
                         foreach (var item2 in item.Value)
                         {
-                            _r += item2 + " ";
+                            _result += item2 + " ";
                         }
-                        _r = " |";
+                        _result = " | ";
                     }
                 }
             }
-            return _r;
+            return _result;
         }
     }
 }
