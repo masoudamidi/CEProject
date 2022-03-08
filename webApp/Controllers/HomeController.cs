@@ -16,10 +16,10 @@ public class HomeController : Controller
         productRepository = _productRepository;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
         //Calling method for getting Orders that are in "IN_PROGRESS" status
-        var _Orders = ordersRepository.getOrdersByStatus(orderStatus.IN_PROGRESS).Result;
+        var _Orders = await ordersRepository.getOrdersByStatus(orderStatus.IN_PROGRESS);
 
         //Calculating Top 5 Products based on recieved orders
         var _topFiveProducts = ordersRepository.getTopFiveProduct(_Orders.Content);
@@ -39,7 +39,7 @@ public class HomeController : Controller
         _products.Add(_product);
 
         //Calling The Method that Updates the stock of the product
-        var updateStockResult = productRepository.updateStock(_products).Result;
+        var updateStockResult = await productRepository.updateStock(_products);
 
         //Combine the two models to one model for showing in the VIEW.
         var model = new IndexViewModel() {
