@@ -37,7 +37,8 @@ namespace cApp
                 //Returning The Error Message from Api
                 Console.WriteLine(model.Message);
             }
-            
+
+            //Letting know what is happening to the user
             Console.WriteLine("Updating stock of top sold product to 25");
 
             //Updating The Stock of the first product retrieved from api to 25. Using 25 is for this Assessment
