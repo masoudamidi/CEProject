@@ -37,7 +37,7 @@ namespace DataAccess.Repositories
                 //Checking if there is and error returned from the API
                 //If there is no error then combining the products that sent to api for stock update.
                 //If there is errors then combining the errors and sending them for showing in the view
-                if (result.Content.Results.Products == null)
+                if (result.Content.Results.ProductResult == null)
                 {
                     _result = result.Message;
                     _result += " | Updated Products: ";
@@ -52,7 +52,7 @@ namespace DataAccess.Repositories
                 }
                 else
                 {
-                    foreach (var item in result.Content.Results.Products)
+                    foreach (var item in result.Content.Results.ProductResult)
                     {
                         _result += item.Key + ": ";
                         foreach (var item2 in item.Value)
