@@ -1,4 +1,4 @@
-public class Product
+public class ProductDTO
 {
     public string? Gtin { get; set; }
     public string? productName { get; set; }

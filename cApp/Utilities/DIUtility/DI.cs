@@ -1,4 +1,4 @@
-using BusinessLogic.Repositories;
+using DataAccess.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -10,7 +10,9 @@ public class DI
         {
             return Host.CreateDefaultBuilder(args)
                 .ConfigureServices((_, services) =>
-                    services.AddTransient<IOrdersRepository, OrdersRepository>()
+                    services.AddTransient<IOrdersService, OrdersService>()
+                            .AddTransient<IProductService, ProductService>()
+                            .AddTransient<IOrdersRepository, OrdersRepository>()
                             .AddTransient<IProductRepository, ProductRepository>());
         }
 }

@@ -1,10 +1,5 @@
-using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
-using BusinessLogic.Repositories;
 using CEProject.Test.Fixtures;
-using DataAccess.Models;
-using Microsoft.Extensions.Configuration;
 using Moq;
 using Xunit;
 
@@ -12,40 +7,23 @@ namespace CEProject.Test;
 
 public class ordersTest
 {
-    private readonly IConfiguration _config;
+    private readonly OrdersService _sut;
+    private readonly Mock<IOrdersRepository> _orderMock = new Mock<IOrdersRepository>();
 
     public ordersTest() 
     {
-        _config = new ConfigurationBuilder()
-        .AddJsonFile(@"appsettings.json", false, false)
-        .AddEnvironmentVariables()
-        .Build();
+        _sut = new OrdersService(_orderMock.Object);
     }
 
     [Fact]
-    public async Task getTopFiveProduct_invalid_Api_Value_Test()
-    {
-        //Arrange
-        _config["apikey"] = "testapikey";
-        IOrdersRepository orders = new OrdersRepository(_config);
-
-        //Act
-        var result = await orders.getOrdersByStatus(orderStatus.IN_PROGRESS);
-
-        //Assert
-        Assert.Equal("401", result.StatusCode.ToString());
-    }
-
-    [Fact]
-    public void getTopFiveProduct_Test()
+    public async Task getTopFiveProduct_Test()
     {
         //Arrange           
-        IOrdersRepository orders = new OrdersRepository(_config);
-
         var DummyData = OrdersFixture.GetDummyData();
+        _orderMock.Setup(x => x.getOrdersByStatus(orderStatus.IN_PROGRESS)).ReturnsAsync(DummyData);
 
         //Act
-        var result = orders.getTopFiveProduct(DummyData);
+        var result = await _sut.getTopFiveProduct();
 
         //Assert
         Assert.True(result.Count <= 5);

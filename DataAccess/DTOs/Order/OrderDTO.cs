@@ -1,6 +1,6 @@
-namespace DataAccess.Models;
+namespace DataAccess.DTOs;
 
-public class Order
+public class OrderDTO
 {
     public int Id { get; set; }
     public string? ChannelName { get; set; }
@@ -28,7 +28,7 @@ public class Order
     public double OriginalShippingCostsVat { get; set; }
     public double OriginalTotalInclVat { get; set; }
      public double OriginalTotalVat { get; set; }
-    public List<Lines>? Lines { get; set; }
+    public List<OrderLinesDTO>? Lines { get; set; }
     public string? Phone { get; set; }
     public string? Email { get; set; }
     public string? CompanyRegistrationNo { get; set; }
@@ -39,7 +39,7 @@ public class Order
     public string? CurrencyCode { get; set; }
     public DateTime OrderDate { get; set; }
     public string? ChannelCustomerNo { get; set; }
-    public orderExtraData? ExtraData { get; set; }
+    public OrderExtraData? ExtraData { get; set; }
 
     
 }

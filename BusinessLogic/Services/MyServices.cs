@@ -1,4 +1,4 @@
-using BusinessLogic.Repositories;
+using DataAccess.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BusinessLogic.Interfaces
@@ -11,6 +11,8 @@ namespace BusinessLogic.Interfaces
         {
             services.AddTransient<IOrdersRepository, OrdersRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IOrdersService, OrdersService>();
+            services.AddTransient<IProductService, ProductService>();
             return services;
         }
     }

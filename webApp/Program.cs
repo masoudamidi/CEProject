@@ -7,7 +7,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddMyServices();
 
-builder.Configuration.AddJsonFile("appsettings.json");
+builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json");
 
 var app = builder.Build();
 

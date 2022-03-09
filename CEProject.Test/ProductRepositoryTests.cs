@@ -1,39 +1,41 @@
 using System.Collections.Generic;
-using BusinessLogic.Repositories;
-using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
+using Moq;
 using Xunit;
 
 namespace CEProject.Test;
 
 public class productsTest
 {
-    private readonly IConfiguration _config;
+    private readonly ProductService _sut;
+    private readonly Mock<IProductRepository> _mockProduct = new Mock<IProductRepository>();
 
     public productsTest() 
     {
-        _config = new ConfigurationBuilder()
-        .AddJsonFile(@"appsettings.json", false, false)
-        .AddEnvironmentVariables()
-        .Build();
+        _sut = new ProductService(_mockProduct.Object);
     }
+
     //Checking If ProductMerchantNo has incorrect value
     [Fact]
-    public void updateStock_Invalid_ProductMerchantNo_Value_Test()
+    public async Task updateStock_Invalid_ProductMerchantNo_Value_Test()
     {
         //Arrange
-        IProductRepository products = new ProductRepository(_config);
-
         //Providing Dummy data for the test
-        var updateStockInput = new List<offerStockApiRequestModel>() {
-            new offerStockApiRequestModel() {
+        var updateStockInput = new List<OfferStock_ApiRequestDTO>() {
+            new OfferStock_ApiRequestDTO() {
                 MerchantProductNo = "",
-                Stock = 25,
-                StockLocationId = 2
+                StockLocations = new List<OfferStock_StockLocationsDTO>() {
+                    new OfferStock_StockLocationsDTO() {
+                        Stock = 25,
+                        StockLocationId = 2
+                    }
+                }
             }
         };
+        _mockProduct.Setup(x => x.updateStock(updateStockInput)).ReturnsAsync("Merchant Product No cannot be null");
 
         //Act
-        var result = products.updateStock(updateStockInput).Result;
+        var result = await _sut.updateStock(updateStockInput);
 
         //Assert
         Assert.Equal("Merchant Product No cannot be null", result);
@@ -44,18 +46,22 @@ public class productsTest
     public void updateStock_Invalid_Stock_Value_Test()
     {
         //Arrange
-        IProductRepository products = new ProductRepository(_config);
-
-        var updateStockInput = new List<offerStockApiRequestModel>() {
-            new offerStockApiRequestModel() {
+        //Providing Dummy data for the test
+        var updateStockInput = new List<OfferStock_ApiRequestDTO>() {
+            new OfferStock_ApiRequestDTO() {
                 MerchantProductNo = "aa",
-                Stock = -1,
-                StockLocationId = 2
+                StockLocations = new List<OfferStock_StockLocationsDTO>() {
+                    new OfferStock_StockLocationsDTO() {
+                        Stock = -1,
+                        StockLocationId = 2
+                    }
+                }
             }
         };
+        _mockProduct.Setup(x => x.updateStock(updateStockInput)).ReturnsAsync("Stock quantity is not valid");
 
         //Act
-        var result = products.updateStock(updateStockInput).Result;
+        var result = _sut.updateStock(updateStockInput).Result;
 
         //Assert
         Assert.Equal("Stock quantity is not valid", result);
@@ -66,18 +72,21 @@ public class productsTest
     public void updateStock_Invalid_StockLocationId_Value_Test()
     {
         //Arrange
-        IProductRepository products = new ProductRepository(_config);
-
-        var updateStockInput = new List<offerStockApiRequestModel>() {
-            new offerStockApiRequestModel() {
+        var updateStockInput = new List<OfferStock_ApiRequestDTO>() {
+            new OfferStock_ApiRequestDTO() {
                 MerchantProductNo = "aa",
-                Stock = 5,
-                StockLocationId = 0
+                StockLocations = new List<OfferStock_StockLocationsDTO>() {
+                    new OfferStock_StockLocationsDTO() {
+                        Stock = 25,
+                        StockLocationId = 0
+                    }
+                }
             }
         };
+        _mockProduct.Setup(x => x.updateStock(updateStockInput)).ReturnsAsync("Stock Location Id is not valid");
 
         //Act
-        var result = products.updateStock(updateStockInput).Result;
+        var result = _sut.updateStock(updateStockInput).Result;
 
         //Assert
         Assert.Equal("Stock Location Id is not valid", result);
@@ -88,18 +97,21 @@ public class productsTest
     public void updateStock_Success_Test()
     {
         //Arrange
-        IProductRepository products = new ProductRepository(_config);
-
-        var updateStockInput = new List<offerStockApiRequestModel>() {
-            new offerStockApiRequestModel() {
+        var updateStockInput = new List<OfferStock_ApiRequestDTO>() {
+            new OfferStock_ApiRequestDTO() {
                 MerchantProductNo = "001201-S",
-                Stock = 25,
-                StockLocationId = 2
+                StockLocations = new List<OfferStock_StockLocationsDTO>() {
+                    new OfferStock_StockLocationsDTO() {
+                        Stock = 25,
+                        StockLocationId = 2
+                    }
+                }
             }
         };
+        _mockProduct.Setup(x => x.updateStock(updateStockInput)).ReturnsAsync("Updates processed without warnings");
 
         //Act
-        var result = products.updateStock(updateStockInput).Result;
+        var result = _sut.updateStock(updateStockInput).Result;
 
         //Assert
         Assert.True(result.Contains("Updates processed without warnings"));

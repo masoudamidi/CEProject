@@ -1,6 +1,7 @@
+using System.Net.Http.Json;
 using Microsoft.Extensions.Configuration;
 
-namespace BusinessLogic.Repositories
+namespace DataAccess.Repositories
 {
     public class ProductRepository : IProductRepository
     {
@@ -13,31 +14,13 @@ namespace BusinessLogic.Repositories
         static HttpClient client = new HttpClient();
 
         //Updating the Stock of product using provided Api.
-        public async Task<string> updateStock(List<offerStockApiRequestModel> products)
+        public async Task<string> updateStock(List<OfferStock_ApiRequestDTO> products)
         {
-            //Check argument validation
-
-            //Checking that every Merchant Product Numbers is valid
-            if (products.Any(t => t.MerchantProductNo == ""))
-            {
-                return "Merchant Product No cannot be null";
-            }
-            //Checking All Stock quantities are valid
-            if (products.Any(t => t.Stock < 0))
-            {
-                return "Stock quantity is not valid";
-            }
-            //Checking All stock location Ids are valid
-            if (products.Any(t => t.StockLocationId == 0))
-            {
-                return "Stock Location Id is not valid";
-            }
-
             //Reading the api key from appsetting.json
             var apikey = _config["apikey"];
             var apipath = _config["apipath"];
             string _result = "";
-            offerStockApiResultModel result = null;
+            OfferStock_ApiResultDTO result = null;
 
             //Combining the Api path url and the apikey for authorization
             string path = $"{apipath}offer/stock?apikey={apikey}";
@@ -46,25 +29,30 @@ namespace BusinessLogic.Repositories
             HttpResponseMessage response = await client.PutAsJsonAsync(path, products);
 
             //Reading and binding the response of api to the model
-            result = await response.Content.ReadAsAsync<offerStockApiResultModel>();
+            //var d = await response.Content.ReadAsStringAsync();
+            result = await response.Content.ReadAsAsync<OfferStock_ApiResultDTO>();
 
             if (response.IsSuccessStatusCode)
             {
                 //Checking if there is and error returned from the API
                 //If there is no error then combining the products that sent to api for stock update.
                 //If there is errors then combining the errors and sending them for showing in the view
-                if (result.Content?.Count == 0)
+                if (result.Content.Results.Products == null)
                 {
                     _result = result.Message;
                     _result += " | Updated Products: ";
                     foreach (var item in products)
                     {
-                        _result += item.MerchantProductNo + $" Stock:({item.Stock}) - ";
+                        _result += item.MerchantProductNo;
+                        foreach (var item2 in item.StockLocations)
+                        {
+                           _result += $" Stock:({item2.Stock}) - ";
+                        }                         
                     }
                 }
                 else
                 {
-                    foreach (var item in result.Content)
+                    foreach (var item in result.Content.Results.Products)
                     {
                         _result += item.Key + ": ";
                         foreach (var item2 in item.Value)

@@ -17,7 +17,7 @@ namespace cApp
             var config = builder.Build();
 
             //Getting the top 5 products from the API
-            IndexViewModel model = await OrderUtility.getTopFiveProducts(host.Services);
+            IndexViewDTO model = await OrderUtility.getTopFiveProducts(host.Services);
 
             if (string.IsNullOrEmpty(model.Message))
             {
@@ -28,7 +28,7 @@ namespace cApp
 
                 //Printing the Data in Table version in Output from ConsoleTable package
                 ConsoleTable
-                    .From<Product>(model.products.AsEnumerable())
+                    .From<ProductDTO>(model.products.AsEnumerable())
                     .Configure(o => o.NumberAlignment = Alignment.Right)
                     .Write(Format.Alternative);
             }

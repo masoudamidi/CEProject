@@ -1,6 +1,6 @@
-namespace DataAccess.Models;
+namespace DataAccess.DTOs;
 
-public class orderApiResultModel
+public class Order_ApiResultDTO
 {
     public int Count { get; set; }
     public int TotalCount { get; set; }
@@ -9,7 +9,7 @@ public class orderApiResultModel
     public int? LogId { get; set; }
     public bool Success { get; set; }
     public string? Message { get; set; }
-    public ValidationErrors? ValidationErrors { get; set; }
-    public List<Order>? Content { get; set; }
+    public ValidationErrorsDTO? ValidationErrors { get; set; }
+    public List<OrderDTO>? Content { get; set; }
 
 }

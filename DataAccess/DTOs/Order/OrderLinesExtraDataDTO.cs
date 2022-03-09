@@ -1,4 +1,4 @@
-namespace DataAccess.Models;
+namespace DataAccess.DTOs;
 
 public class ExtraData
 {

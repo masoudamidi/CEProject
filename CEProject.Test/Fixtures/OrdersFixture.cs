@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using DataAccess.Models;
+using DataAccess.DTOs;
 
 namespace CEProject.Test.Fixtures
 {
@@ -7,14 +7,14 @@ namespace CEProject.Test.Fixtures
     {
         //Preparing Dummy data for the test
         //Because testing is about only products with their quantity we can only fill required data.
-        public static List<Order> GetDummyData()
+        public static List<OrderDTO> GetDummyData()
         {
-            List<Order> myDummyData = new List<Order>();
+            List<OrderDTO> myDummyData = new List<OrderDTO>();
 
-            myDummyData.Add(new Order()
+            myDummyData.Add(new OrderDTO()
             {
-                Lines = new List<Lines>() {
-                    new Lines() {
+                Lines = new List<OrderLinesDTO>() {
+                    new OrderLinesDTO() {
                         Description = "T-Shirt ONE",
                         Gtin = "123456789",
                         Quantity = 1
@@ -22,15 +22,15 @@ namespace CEProject.Test.Fixtures
             }
             });
 
-            myDummyData.Add(new Order()
+            myDummyData.Add(new OrderDTO()
             {
-                Lines = new List<Lines>() {
-                    new Lines() {
+                Lines = new List<OrderLinesDTO>() {
+                    new OrderLinesDTO() {
                         Description = "T-Shirt ONE",
                         Gtin = "123456789",
                         Quantity = 1
                     },
-                    new Lines() {
+                    new OrderLinesDTO() {
                         Description = "T-Shirt TWO",
                         Gtin = "987654321",
                         Quantity = 3
@@ -38,15 +38,15 @@ namespace CEProject.Test.Fixtures
             }
             });
 
-            myDummyData.Add(new Order()
+            myDummyData.Add(new OrderDTO()
             {
-                Lines = new List<Lines>() {
-                    new Lines() {
+                Lines = new List<OrderLinesDTO>() {
+                    new OrderLinesDTO() {
                         Description = "T-Shirt THREE",
                         Gtin = "111111111",
                         Quantity = 6
                     },
-                    new Lines() {
+                    new OrderLinesDTO() {
                         Description = "T-Shirt FOUR",
                         Gtin = "222222222",
                         Quantity = 1
@@ -54,15 +54,15 @@ namespace CEProject.Test.Fixtures
             }
             });
 
-            myDummyData.Add(new Order()
+            myDummyData.Add(new OrderDTO()
             {
-                Lines = new List<Lines>() {
-                    new Lines() {
+                Lines = new List<OrderLinesDTO>() {
+                    new OrderLinesDTO() {
                         Description = "T-Shirt FIVE",
                         Gtin = "333333333",
                         Quantity = 2
                     },
-                    new Lines() {
+                    new OrderLinesDTO() {
                         Description = "T-Shirt SIX",
                         Gtin = "444444444",
                         Quantity = 2

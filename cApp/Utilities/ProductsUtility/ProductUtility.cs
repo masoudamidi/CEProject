@@ -12,41 +12,31 @@ namespace cApp
             var provider = serviceScope.ServiceProvider;
 
             //Using interface that provided for getting the orders and products
-            var productservice = provider.GetRequiredService<IProductRepository>();
-            var orderservice = provider.GetRequiredService<IOrdersRepository>();
+            var productservice = provider.GetRequiredService<IProductService>();
+            var orderservice = provider.GetRequiredService<IOrdersService>();
 
             //Using the method inside Orders Interface for retrieving the Orders in "IN_PROGRESS" status
             var ordersInProgress = await orderservice.getOrdersByStatus(orderStatus.IN_PROGRESS);
 
-            if (ordersInProgress.StatusCode == 200)
+            //Providing the model needed for product repository in order to updating the stock
+            var _product = new OfferStock_ApiRequestDTO()
             {
-                //Checking if there is any orders in api result
-                if (ordersInProgress.Content != null)
-                {
-                    //Providing the model needed for product repository in order to updating the stock
-                    var _product = new offerStockApiRequestModel()
-                    {
-                        MerchantProductNo = ordersInProgress.Content[0].Lines[0].MerchantProductNo,
+                MerchantProductNo = ordersInProgress[0].Lines[0].MerchantProductNo,
+                StockLocations = new List<OfferStock_StockLocationsDTO>() {
+                    new OfferStock_StockLocationsDTO() {
                         Stock = 25,
-                        StockLocationId = ordersInProgress.Content[0].Lines[0].StockLocation.Id
-                    };
-
-                    //Adding the model to the list. Getting data ready for the api to use
-                    var _products = new List<offerStockApiRequestModel>();
-                    _products.Add(_product);
-
-                    //Returning the result from the api
-                    return await productservice.updateStock(_products);
+                        StockLocationId = ordersInProgress[0].Lines[0].StockLocation.Id
+                    }
                 }
-                else
-                {
-                    return "There is no product to update";
-                }
-            }
-            else 
-            {
-                return ordersInProgress.StatusCode.ToString() + ' ' + ordersInProgress.Message;
-            }
+            };
+
+            //Adding the model to the list. Getting data ready for the api to use
+            var _products = new List<OfferStock_ApiRequestDTO>();
+            _products.Add(_product);
+
+            //Returning the result from the api
+            return await productservice.updateStock(_products);
+
         }
     }
 }

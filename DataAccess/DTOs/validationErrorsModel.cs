@@ -1,6 +1,4 @@
-namespace DataAccess.Models;
-
-public class ValidationErrors
+public class ValidationErrorsDTO
 {
     public string? additionalProp1 { get; set; }
     public string? additionalProp2 { get; set; }

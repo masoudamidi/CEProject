@@ -1,6 +1,6 @@
-namespace DataAccess.Models;
+namespace DataAccess.DTOs;
 
-public class Lines
+public class OrderLinesDTO
 {
     public string? Status { get; set; }    
     public bool IsFulfillmentByMarketplace { get; set; }    
