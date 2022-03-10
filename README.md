@@ -1,7 +1,7 @@
 # CEProject
 
 
-This project created for implementing the assessment from ChannelEngine company
+This project created for implementing the assessment from a company
 
 There is 5 project in a solution such as:
 
